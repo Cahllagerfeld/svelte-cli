@@ -8,6 +8,7 @@
 			"@/*": ["./*"]
 		},
 		"composite": false,
+		"lib": ["ESNext"],
 		"declaration": true,
 		"declarationMap": true,
 		"esModuleInterop": true,
