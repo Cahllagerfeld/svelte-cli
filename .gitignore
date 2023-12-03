@@ -26,3 +26,14 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
+
