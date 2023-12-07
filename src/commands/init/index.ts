@@ -1,8 +1,10 @@
 import { Command } from "commander";
 import { z } from "zod";
-import { existsSync } from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
 import { resolve } from "path";
 import prompts from "prompts";
+import ora from "ora";
+import { configSchema } from "@/src/lib/config";
 
 const initOptionsSchema = z.object({
 	cwd: z.string()
@@ -25,11 +27,10 @@ export const init = new Command()
 			process.exit(1);
 		}
 
-		const config = await promptConfig();
-		console.log(config);
+		await promptConfig(cwd);
 	});
 
-async function promptConfig() {
+async function promptConfig(cwd: string) {
 	const options = await prompts([
 		{
 			type: "text",
@@ -44,5 +45,14 @@ async function promptConfig() {
 			initial: "$lib/server"
 		}
 	]);
-	return options;
+
+	const config = configSchema.parse({
+		modules: options.modules,
+		serverModules: options.serverModules
+	});
+
+	const spinner = ora("Writing config file").start();
+	const targetPath = resolve(cwd, "svelte-cli.json");
+	writeFileSync(targetPath, JSON.stringify(config, null, "\t"), "utf8");
+	spinner.succeed(`Config file written to ${targetPath}`);
 }
