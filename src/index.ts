@@ -1,5 +1,6 @@
 import { Command } from "commander";
 import { ping } from "./commands/ping";
+import { init } from "./commands/init";
 
 async function main() {
 	const program = new Command()
@@ -8,6 +9,7 @@ async function main() {
 		.version("0.0.1", "-v, --version", "output the current version");
 
 	program.addCommand(ping);
+	program.addCommand(init);
 	program.parse();
 }
 

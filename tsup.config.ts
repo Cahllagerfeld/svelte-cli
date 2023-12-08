@@ -7,6 +7,7 @@ export default defineConfig({
 	format: ["esm"],
 	sourcemap: true,
 	minify: true,
+	treeshake: true,
 	target: "esnext",
 	outDir: "dist"
 });
